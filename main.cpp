@@ -9,12 +9,12 @@ using namespace std;
 
 class balancedRandom {
     private: double luck;
-    private: double koef;
+    private: double coef;
     private: double savedPercent;
 
-    public: balancedRandom(double probabilityPercent = 0.0, double koefficient = 0.06) {
+    public: balancedRandom(double probabilityPercent = 0.0, double coefficient = 0.06) {
         srand(time(NULL));
-        koef = koefficient;
+        coef = coefficient;
         savedPercent = probabilityPercent;
     };
 
@@ -22,28 +22,18 @@ class balancedRandom {
         int randVal = rand() % 100000 + 1;
         if (randVal <= probabilityPercent * (1 + abs(luck) / (abs(luck) + 1) * (luck > 0 ? 1 : -1)) * 1000)
         {
-            luck -= (100 - probabilityPercent) * koef;
+            luck -= (100 - probabilityPercent) * coef;
             return true;
         }
         else
         {
-            luck += probabilityPercent * koef;
+            luck += probabilityPercent * coef;
             return false;
         }
     }
 
     public: bool getChance() {
-        int randVal = rand() % 100000 + 1;
-        if (randVal <= savedPercent * (1 + abs(luck) / (abs(luck) + 1) * (luck > 0 ? 1 : -1)) * 1000)
-        {
-            luck -= (100 - savedPercent) * koef;
-            return true;
-        }
-        else
-        {
-            luck += savedPercent * koef;
-            return false;
-        }
+        return getChance(savedPercent);
     }
 
     public: getLuck() {
@@ -54,12 +44,12 @@ class balancedRandom {
         luck = value;
     }
 
-    public: getKoef() {
-        return koef;
+    public: getCoef() {
+        return coef;
     }
 
-    public: setKoef(double value) {
-        koef = value;
+    public: setCoef(double value) {
+        coef = value;
     }
 
     public: getPercent() {
